@@ -167,7 +167,16 @@ function loadPageContent(pageName) {
             document.body.className = 'building-page new-cursor';
             break;
 
-
+        case 'drawinglots':
+            newContent = `
+                <div class="drawinglots-container">
+                    <img src="ArtAsset/Drawinglots/DrawinglotsYellowSpot.png" class="drawinglots-spot">
+                    <img src="ArtAsset/Drawinglots/DrawinglotsLotpot.png" class="drawinglots-pot" id="drawinglotsPot">
+                    <img src="ArtAsset/Drawinglots/DrawinglotsLot.png" class="drawinglots-lot" id="drawinglotsLot">
+                </div>
+            `;
+            document.body.className = 'drawinglots-page new-cursor';
+            break;
     }
     
     document.body.innerHTML = newContent;
@@ -221,3 +230,35 @@ function initBuildingPage() {
         });
     });
 }
+
+// Drawinglots页面功能
+function initDrawingLotsPage() {
+    const pot = document.getElementById('drawinglotsPot');
+    const lot = document.getElementById('drawinglotsLot');
+
+   if (pot) {
+    // 页面初始化时触发淡入
+        pot.classList.add('show');
+
+        pot.addEventListener('click', function() {
+            // 先移除再强制重绘，保证动画每次都能触发
+            pot.classList.remove('shake');
+            void pot.offsetWidth;   // 强制浏览器重绘
+            pot.classList.add('shake');
+
+            setTimeout(() => {
+                pot.classList.remove('shake');
+                lot.classList.add('show');
+            }, 500);
+        } 
+        );
+    }
+
+
+    if (lot) {
+        lot.addEventListener('click', function() {
+            navigateToPage('interpretation');
+        });
+    }
+}
+
