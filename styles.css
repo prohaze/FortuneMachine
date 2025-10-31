@@ -40,7 +40,7 @@ body.new-cursor {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    scale: 1.0;
+    transform: scale(1.0);
     z-index: 1;
 }
 
@@ -281,7 +281,7 @@ body.new-cursor {
 .drawinglots-spot {
     position: absolute;
     opacity: 0;
-    scale: 0.7;
+    transform: scale(0.7);
     left: 30%;
     top: 10%;
     animation: fadeIn 1s ease-out forwards;
@@ -319,7 +319,7 @@ body.new-cursor {
 .drawinglots-lot.show {
     opacity: 1;
     z-index: 4;
-    scale: 0.65;
+    transform: scale(0.65);
     top: 1%;
     /* 显示后才可点击 */
     pointer-events: auto;
@@ -374,7 +374,7 @@ body.new-cursor {
 .interpretation-paper {
     position: absolute;
     opacity: 0;
-    scale:0.68;
+    transform: scale(0.68);
     bottom: -8%;
     animation: fadeIn 1s ease-out forwards;
 }
@@ -382,7 +382,7 @@ body.new-cursor {
 .interpretation-result {
     position: absolute;
     opacity: 0;
-    scale:0.68;
+    transform: scale(0.68);
     bottom: 1%;
     animation: fadeIn 1s ease-out 1s forwards;
 }
@@ -391,8 +391,7 @@ body.new-cursor {
     position: absolute;
     bottom: 0%;
     left: 45%;
-    scale: 0.65;
-    transform: translateX(-50%);
+    transform: translateX(-50%);scale: 0.65;
     opacity: 0;
     animation: fadeIn 1s ease-out 6s forwards, float 2s ease-in-out infinite 6s;
     cursor: url('ArtAsset/NewCursor.png'), pointer;
@@ -402,8 +401,7 @@ body.new-cursor {
     position: absolute;
     top: 34%;
     left: 35%;
-    scale: 0.76;
-    transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%); scale: 0.76;
     display: flex;
     gap: 36px;
 }
@@ -432,7 +430,7 @@ body.new-cursor {
     left: -4%;
     opacity: 0;
     transform: scale(0.7);
-    animation: fadeIn 1s ease-out 8s forwards;
+    animation: fadeIn 1s ease-out 3s forwards;
 }
 
 
@@ -441,8 +439,8 @@ body.new-cursor {
     bottom: 3%;
     right: 0%;
     opacity: 0;
-    scale: 0.75;
-    animation: fadeIn 1s ease-out 9s forwards, float 2s ease-in-out infinite 9s;
+    transform: scale(0.75);
+    animation: fadeIn 1s ease-out 4s forwards, float 2s ease-in-out infinite 9s;
     cursor: url('ArtAsset/NewCursor.png'), pointer;
 }
 
