@@ -431,9 +431,10 @@ body.new-cursor {
     bottom: 3%;
     left: -4%;
     opacity: 0;
-    scale: 0.7;
+    transform: scale(0.7);
     animation: fadeIn 1s ease-out 8s forwards;
 }
+
 
 .interpretation-arrow {
     position: absolute;
@@ -443,6 +444,11 @@ body.new-cursor {
     scale: 0.75;
     animation: fadeIn 1s ease-out 9s forwards, float 2s ease-in-out infinite 9s;
     cursor: url('ArtAsset/NewCursor.png'), pointer;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
 }
 
 /*----------------------------------------------- Ending页面样式 -----------------------------------------------*/
