@@ -177,6 +177,21 @@ function loadPageContent(pageName) {
             `;
             document.body.className = 'drawinglots-page new-cursor';
             break;
+
+        case 'interpretation':
+            const results = ['Daji', 'Zhongji', 'Xiaoji', 'Xiaoxiong', 'Zhongxiong', 'Daxiong'];
+            const randomResult = results[Math.floor(Math.random() * results.length)];
+            interpretationResult = randomResult;
+            
+            newContent = `
+                <div class="interpretation-container">
+                    <img src="ArtAsset/Interpretation/InterpretationPaper.png" class="interpretation-paper">
+                    <img src="ArtAsset/Interpretation/Interpretation${randomResult}.png" class="interpretation-result">
+                    <img src="ArtAsset/Interpretation/InterpretationButton.png" class="interpretation-button" id="interpretationButton">
+                </div>
+            `;
+            document.body.className = 'interpretation-page new-cursor';
+            break;
     }
     
     document.body.innerHTML = newContent;
@@ -224,7 +239,7 @@ function initBuildingPage() {
                     // 所有建筑都被点击后，3秒后自动跳转
                     setTimeout(() => {
                         navigateToPage('drawinglots');
-                    }, 3000);
+                    }, 1000);
                 }
             }
         });
@@ -241,15 +256,16 @@ function initDrawingLotsPage() {
         pot.classList.add('show');
 
         pot.addEventListener('click', function() {
-            // 先移除再强制重绘，保证动画每次都能触发
+            // 先移除再强制重绘
             pot.classList.remove('shake');
-            void pot.offsetWidth;   // 强制浏览器重绘
+            // 强制浏览器重绘
+            void pot.offsetWidth;   
             pot.classList.add('shake');
 
             setTimeout(() => {
                 pot.classList.remove('shake');
                 lot.classList.add('show');
-            }, 500);
+            }, 2000);
         } 
         );
     }
@@ -262,3 +278,38 @@ function initDrawingLotsPage() {
     }
 }
 
+// Interpretation页面功能
+function initInterpretationPage() {
+    const button = document.getElementById('interpretationButton');
+    
+    if (button) {
+        button.addEventListener('click', function() {
+            showMangaContent();
+        });
+    }
+}
+
+function showMangaContent() {
+    const container = document.querySelector('.interpretation-container');
+    const result = interpretationResult;
+    
+    // 清除现有内容
+    container.innerHTML = `
+        <div class="manga-container">
+            <img src="ArtAsset/Interpretation/Interpretation${result}Manga1.png" class="manga-item">
+            <img src="ArtAsset/Interpretation/Interpretation${result}Manga2.png" class="manga-item">
+            <img src="ArtAsset/Interpretation/Interpretation${result}Manga3.png" class="manga-item">
+            <img src="ArtAsset/Interpretation/Interpretation${result}Manga4.png" class="manga-item">
+        </div>
+        <img src="ArtAsset/Interpretation/Interpretation${result}MangaText.png" class="manga-text">
+        <img src="ArtAsset/Interpretation/InterpretationArrow.png" class="interpretation-arrow" id="interpretationArrow">
+    `;
+    
+    // 添加箭头点击事件
+    const arrow = document.getElementById('interpretationArrow');
+    if (arrow) {
+        arrow.addEventListener('click', function() {
+            navigateToPage('ending');
+        });
+    }
+}

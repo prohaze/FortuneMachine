@@ -276,7 +276,7 @@ body.new-cursor {
 
 /*----------------------------------------------- Drawinglots页面样式 -----------------------------------------------*/
 .drawinglots-container {
-     width: 100vw;
+    width: 100vw;
     height: 100vh;
     position: relative;
     background: url('ArtAsset/Drawinglots/DrawinglotsBackground.png') center/cover;
@@ -310,7 +310,7 @@ body.new-cursor {
 
 .drawinglots-pot.shake {
   animation-name: shake;
-  animation-duration: 0.5s;
+  animation-duration: 2.0s;
   animation-timing-function: ease-in-out;
 }
 
@@ -341,12 +341,113 @@ body.new-cursor {
 
 @keyframes shake {
   0%, 100% { transform: scale(0.7) translate(0, 0); opacity: 1; }
+  5% { transform: scale(0.7) translate(-5px, -5px); opacity: 1; }
+  10% { transform: scale(0.7) translate(5px, 5px); opacity: 1; }
+  15% { transform: scale(0.7) translate(-5px, -5px); opacity: 1; }
+  20% { transform: scale(0.7) translate(5px, 5px); opacity: 1; }
   25% { transform: scale(0.7) translate(-5px, -5px); opacity: 1; }
+  30% { transform: scale(0.7) translate(5px, 5px); opacity: 1; }
+  35% { transform: scale(0.7) translate(-5px, -5px); opacity: 1; }
+  40% { transform: scale(0.7) translate(5px, 5px); opacity: 1; }
+  45% { transform: scale(0.7) translate(-5px, -5px); opacity: 1; }
   50% { transform: scale(0.7) translate(5px, 5px); opacity: 1; }
+  55% { transform: scale(0.7) translate(-5px, 5px); opacity: 1; }
+  60% { transform: scale(0.7) translate(5px, 5px); opacity: 1; }
+  65% { transform: scale(0.7) translate(-5px, 5px); opacity: 1; }
+  70% { transform: scale(0.7) translate(5px, 5px); opacity: 1; }
   75% { transform: scale(0.7) translate(-5px, 5px); opacity: 1; }
+  80% { transform: scale(0.7) translate(5px, 5px); opacity: 1; }
+  85% { transform: scale(0.7) translate(-5px, 5px); opacity: 1; }
+  90% { transform: scale(0.7) translate(5px, 5px); opacity: 1; }
+  95% { transform: scale(0.7) translate(-5px, 5px); opacity: 1; }
 }
 
 
 .shake {
     animation: shake 0.5s ease-in-out;
+}
+
+/*----------------------------------------------- Interpretation页面样式 -----------------------------------------------*/
+.interpretation-container {
+    width: 100vw;
+    height: 100vh;
+    position: relative;
+    background: url('ArtAsset/Interpretation/InterpretationBackground.png') center/cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.interpretation-paper {
+    position: absolute;
+    opacity: 0;
+    scale:0.68;
+    bottom: -8%;
+    animation: fadeIn 1s ease-out forwards;
+}
+
+.interpretation-result {
+    position: absolute;
+    opacity: 0;
+    scale:0.68;
+    bottom: 1%;
+    animation: fadeIn 1s ease-out 1s forwards;
+}
+
+.interpretation-button {
+    position: absolute;
+    bottom: 0%;
+    left: 45%;
+    scale: 0.65;
+    transform: translateX(-50%);
+    opacity: 0;
+    animation: fadeIn 1s ease-out 6s forwards, float 2s ease-in-out infinite 6s;
+    cursor: url('ArtAsset/NewCursor.png'), pointer;
+}
+
+.manga-container {
+    position: absolute;
+    top: 34%;
+    left: 35%;
+    scale: 0.76;
+    transform: translate(-50%, -50%);
+    display: flex;
+    gap: 36px;
+}
+
+.manga-item {
+    opacity: 0;
+    transform: translateX(-100px);
+    animation: slideInManga 0.8s ease-out forwards;
+}
+
+.manga-item:nth-child(1) { animation-delay: 1s; }
+.manga-item:nth-child(2) { animation-delay: 1.2s; }
+.manga-item:nth-child(3) { animation-delay: 1.4s; }
+.manga-item:nth-child(4) { animation-delay: 1.6s; }
+
+@keyframes slideInManga {
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.manga-text {
+    position: absolute;
+    bottom: 3%;
+    left: -4%;
+    opacity: 0;
+    scale: 0.7;
+    animation: fadeIn 1s ease-out 8s forwards;
+}
+
+.interpretation-arrow {
+    position: absolute;
+    bottom: 3%;
+    right: 0%;
+    opacity: 0;
+    scale: 0.75;
+    animation: fadeIn 1s ease-out 9s forwards, float 2s ease-in-out infinite 9s;
+    cursor: url('ArtAsset/NewCursor.png'), pointer;
 }
