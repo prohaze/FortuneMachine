@@ -9,7 +9,7 @@ body {
     font-family: 'Arial', sans-serif;
     overflow: hidden;
     cursor: url('ArtAsset/NormalCursor.png'), auto;
-    background-color: #000;
+    background-color: rgba(219, 71, 137, 1);
 }
 
 body {
@@ -211,8 +211,7 @@ body.new-cursor {
     position: absolute;
     top: 86%;
     left: -10%;
-    transform: translateY(-50%) translateX(-200px);
-    scale: 0.8;
+    transform: translateY(-50%) translateX(-200px)scale(0.8);
     animation: slideInArrow 1s ease-out forwards;
 }
 
@@ -391,7 +390,8 @@ body.new-cursor {
     position: absolute;
     bottom: 0%;
     left: 45%;
-    transform: translateX(-50%);scale: 0.65;
+    transform: translateX(-50%);
+    scale: 0.65;
     opacity: 0;
     animation: fadeIn 1s ease-out 6s forwards, float 2s ease-in-out infinite 6s;
     cursor: url('ArtAsset/NewCursor.png'), pointer;
@@ -401,7 +401,8 @@ body.new-cursor {
     position: absolute;
     top: 34%;
     left: 35%;
-    transform: translate(-50%, -50%); scale: 0.76;
+    transform: translate(-50%, -50%);
+    scale: 0.76;
     display: flex;
     gap: 36px;
 }
@@ -426,11 +427,12 @@ body.new-cursor {
 
 .manga-text {
     position: absolute;
-    bottom: 3%;
+    bottom: 2%;
     left: -4%;
     opacity: 0;
     transform: scale(0.7);
     animation: fadeIn 1s ease-out 3s forwards;
+    z-index: 10;
 }
 
 
@@ -440,7 +442,9 @@ body.new-cursor {
     right: 0%;
     opacity: 0;
     transform: scale(0.75);
-    animation: fadeIn 1s ease-out 4s forwards, float 2s ease-in-out infinite 9s;
+    animation: 
+        fadeIn 1s ease-out 3s forwards,
+        float 2s ease-in-out infinite 3s;
     cursor: url('ArtAsset/NewCursor.png'), pointer;
 }
 
