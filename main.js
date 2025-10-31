@@ -91,6 +91,19 @@ function loadPageContent(pageName) {
     let newContent = '';
     
     switch(pageName) {
+
+        case 'start':
+            newContent = `
+                <div class="start-container">
+                    <img src="ArtAsset/Start/StartBackground.png" alt="背景" class="start-background">
+                    <img src="ArtAsset/Start/StartTitle.png" alt="标题" class="start-title floating">
+                    <img src="ArtAsset/Start/StartButton.png" alt="开始按钮" class="start-button" id="startButton">
+                </div>
+            `;
+            document.body.className = 'start-page';
+        break;
+
+
         case 'incenseoffering':
             newContent = `
                 <div class="incense-container">
@@ -118,8 +131,43 @@ function loadPageContent(pageName) {
                 </div>
                 `;
         // 初始进入页面时保持 NormalCursor
-        document.body.className = 'incenseoffering-page';
-    break;
+            document.body.className = 'incenseoffering-page';
+            break;
+
+        case 'building':
+            newContent = `
+                <div class="building-container">
+
+                    <img src="ArtAsset/Building/BuildingArrow.png" class="building-arrow" id="buildingArrow">
+
+                    <div class="building-items">
+
+                        <div class="building-item pixiu">
+                            <img src="ArtAsset/Building/BuildingPixiu.png" class="building-main">
+                            <img src="ArtAsset/Building/BuildingPixiuIcon.png" class="building-icon pixiu-icon">
+                        </div>
+
+                        <div class="building-item huangdaxiansi">
+                            <img src="ArtAsset/Building/BuildingHuangdaxiansi.png" class="building-main">
+                            <img src="ArtAsset/Building/BuildingHuangdaxiansiIcon.png" class="building-icon huangdaxiansi-icon">
+                        </div>
+
+                        <div class="building-item sanshengtang">
+                            <img src="ArtAsset/Building/BuildingSanshengtang.png" class="building-main">
+                            <img src="ArtAsset/Building/BuildingSanshengtangIcon.png" class="building-icon sanshengtang-icon">
+                        </div>
+
+                        <div class="building-item shengxiang">
+                            <img src="ArtAsset/Building/BuildingShengxiang.png" class="building-main">
+                            <img src="ArtAsset/Building/BuildingShengxiangIcon.png" class="building-icon shengxiang-icon">
+                        </div>
+                    </div>
+                </div>
+            `;
+            document.body.className = 'building-page new-cursor';
+            break;
+
+
     }
     
     document.body.innerHTML = newContent;
@@ -149,4 +197,27 @@ function initIncenseOfferingPage() {
             navigateToPage('building');
         });
     }
+}
+
+// Building页面功能
+function initBuildingPage() {
+    const buildingItems = document.querySelectorAll('.building-item');
+    let clickedCount = 0;
+    
+    buildingItems.forEach(item => {
+        item.addEventListener('click', function() {
+            const icon = item.querySelector('.building-icon');
+            if (!icon.classList.contains('show')) {
+                icon.classList.add('show');
+                clickedCount++;
+                
+                if (clickedCount === buildingItems.length) {
+                    // 所有建筑都被点击后，3秒后自动跳转
+                    setTimeout(() => {
+                        navigateToPage('drawinglots');
+                    }, 3000);
+                }
+            }
+        });
+    });
 }
