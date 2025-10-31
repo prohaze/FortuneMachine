@@ -118,50 +118,57 @@ body.new-cursor {
     z-index: 1;
 }
 
+/* 背景桌子：只动画 bottom/opacity，不改 transform */
 .incense-box {
     position: absolute;
-    bottom: 150%;
-    left: 40%;
-    transform: translateX(-50%);
-    scale: 0.75;
+    bottom: -13.5%;
+    left: 50%;
+    transform: translateX(-50%) scale(0.75);
     z-index: 2;
-    animation: slideUpBox 1s ease-out forwards;
+    animation: slideUpBox 1s ease-out;
 }
 
+/* 所有香：hover 需要平滑，且不被动画写死 transform */
 .incense-item {
     position: absolute;
     bottom: -200px;
-    transition: transform 0.3s ease;
-    cursor: url('ArtAsset/NormalCursor.png'), pointer;
     z-index: 3;
+    cursor: url('ArtAsset/NormalCursor.png'), pointer;
+    transition: transform 0.25s ease;
+    will-change: transform;
 }
 
-.incense-item:hover {
-    transform: scale(1.1);
-}
-
-.incense-item.incense-2:hover {
-    transform: translateX(-50%) scale(1.1);
-}
-
+/* 初始位置与缩放（用 transform 合并） */
 .incense-1 { 
     left: 15%; 
     bottom: 20%;
-    scale: 0.75;
-    animation: slideUpIncense 1s ease-out 0.3s forwards;
+    transform: scale(0.75);
+    animation: slideUpIncense 1s ease-out 0.3s;
 }
+
 .incense-2 { 
-    left: 68%; 
-    bottom: 24%;
-    transform: translateX(-50%);
-    scale: 0.75;
-    animation: slideUpIncense 1s ease-out 0.5s forwards;
+    left: 70%; 
+    bottom: 26%;
+    transform: translateX(-50%) scale(0.75);
+    animation: slideUpIncense 1s ease-out 0.5s;
 }
+
 .incense-3 { 
-    right: 19%; 
+    right: 20%; 
     bottom: 15%;
-    scale: 0.73;
-    animation: slideUpIncense 1s ease-out 0.7s forwards;
+    transform: scale(0.73);
+    animation: slideUpIncense 1s ease-out 0.7s;
+}
+
+/* hover：保留原 transform，再在其上放大 */
+.incense-1:hover {
+    transform: scale(0.9);
+}
+.incense-2:hover {
+    transform: translateX(-50%) scale(0.9);
+}
+.incense-3:hover {
+    transform: scale(0.9);
 }
 
 .incense-arrow {
@@ -169,40 +176,26 @@ body.new-cursor {
     bottom: 4%;
     right: -2%;
     opacity: 0;
-    /* 初始在屏幕下方 */
-    transform: translateY(100px); 
+    transform: translateY(100px);
     transition: all 0.8s ease-out;
     cursor: url('ArtAsset/NewCursor.png'), pointer;
 }
 
 .incense-arrow.show {
     opacity: 1;
-    /* 从下往上浮现 */
-    transform: translateY(0); 
+    transform: translateY(0);
     animation: float 2s ease-in-out infinite;
 }
 
-/* 上香动画 */
+/* 上香动画：只改 bottom/opacity，不改 transform */
 @keyframes slideUpBox {
-    from {
-        bottom: -200px;
-        opacity: 0;
-    }
-    to {
-        bottom: 0;
-        opacity: 1;
-    }
+    from { bottom: -200px; opacity: 0; }
+    to   { bottom: -13.5%; opacity: 1; }
 }
 
 @keyframes slideUpIncense {
-    from {
-        bottom: -200px;
-        opacity: 0;
-    }
-    to {
-        bottom: 150px;
-        opacity: 1;
-    }
+    from { bottom: -200px; opacity: 0; }
+    to   { bottom: 20%px;  opacity: 1; }
 }
 
 /*----------------------------------------------- Building页面样式 -----------------------------------------------*/
@@ -450,4 +443,49 @@ body.new-cursor {
     scale: 0.75;
     animation: fadeIn 1s ease-out 9s forwards, float 2s ease-in-out infinite 9s;
     cursor: url('ArtAsset/NewCursor.png'), pointer;
+}
+
+/*----------------------------------------------- Ending页面样式 -----------------------------------------------*/
+.ending-container {
+    width: 100vw;
+    height: 100vh;
+    position: relative;
+    background: url('ArtAsset/Ending/EndingBackground.png') center/cover;
+    cursor: url('ArtAsset/NormalCursor.png'), auto;
+}
+
+.ending-title {
+    position: absolute;
+    top: -20%;
+    left: 37%;
+    transform: translateX(-50%);
+    opacity: 0;
+    scale: 0.8;
+    animation: fadeInUp 2s ease-out forwards, float 3s ease-in-out infinite 2s;
+}
+
+@keyframes fadeInUp {
+    0% {
+        opacity: 0;
+        transform: translateX(-50%) translateY(50px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+    }
+}
+
+.ending-replay {
+    position: absolute;
+    bottom: 1.5%;
+    left: 47.5%;
+    transform: translateX(-50%);
+    opacity: 0;
+    scale: 0.6;
+    animation: fadeIn 1s ease-out 3s forwards;
+    cursor: url('ArtAsset/NormalCursor.png'), pointer;
+}
+
+.ending-replay:hover {
+    transform: translateX(-50%) scale(1.1);
 }

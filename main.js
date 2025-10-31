@@ -107,32 +107,21 @@ function loadPageContent(pageName) {
         case 'incenseoffering':
             newContent = `
                 <div class="incense-container">
-
-                    <!-- 背景图由 CSS 控制，这里只需要容器 -->
                     <img src="ArtAsset/Incenseoffering/IncenseofferingBackgroundBox.png" 
-                        class="incense-box" 
-                        style="bottom: -97px; animation: slideUp 1s ease-out forwards;">
-            
+                    class="incense-box">
                     <img src="ArtAsset/Incenseoffering/IncenseofferingIncense1.png" 
-                        class="incense-item incense-1" 
-                        style="animation: slideUp 1s ease-out 0.3s forwards;">
-            
+                    class="incense-item incense-1">
                     <img src="ArtAsset/Incenseoffering/IncenseofferingIncense2.png" 
-                        class="incense-item incense-2" 
-                        style="animation: slideUp 1s ease-out 0.5s forwards;">
-            
+                    class="incense-item incense-2">
                     <img src="ArtAsset/Incenseoffering/IncenseofferingIncense3.png" 
-                        class="incense-item incense-3" 
-                        style="animation: slideUp 1s ease-out 0.7s forwards;">
-            
+                    class="incense-item incense-3">
                     <img src="ArtAsset/Incenseoffering/IncenseofferingArrow.png" 
-                        class="incense-arrow" 
-                        id="incenseArrow">
+                    class="incense-arrow" id="incenseArrow">
                 </div>
-                `;
-        // 初始进入页面时保持 NormalCursor
+            `;
             document.body.className = 'incenseoffering-page';
-            break;
+        break;
+
 
         case 'building':
             newContent = `
@@ -191,6 +180,16 @@ function loadPageContent(pageName) {
                 </div>
             `;
             document.body.className = 'interpretation-page new-cursor';
+            break;
+
+        case 'ending':
+            newContent = `
+                <div class="ending-container">
+                    <img src="ArtAsset/Ending/EndingTitle.png" class="ending-title">
+                    <img src="ArtAsset/Ending/EndingReplay.png" class="ending-replay" id="endingReplay">
+                </div>
+            `;
+            document.body.className = 'ending-page';
             break;
     }
     
@@ -313,3 +312,34 @@ function showMangaContent() {
         });
     }
 }
+
+// Ending页面功能
+function initEndingPage() {
+    const replayButton = document.getElementById('endingReplay');
+    
+    if (replayButton) {
+        replayButton.addEventListener('click', function() {
+            // 重置所有状态
+            currentPage = 'start';
+            clickedItems = [];
+            interpretationResult = '';
+            navigateToPage('start');
+        });
+    }
+}
+
+/// 添加上滑动画
+const style = document.createElement('style');
+style.textContent = `
+    @keyframes slideUp {
+        from {
+            transform: translateX(-50%) translateY(200px);
+            opacity: 0;
+        }
+        to {
+            transform: translateX(-50%) translateY(0);
+            opacity: 1;
+        }
+    }
+`;
+document.head.appendChild(style);
