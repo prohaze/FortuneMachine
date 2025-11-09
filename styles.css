@@ -428,7 +428,7 @@ body.new-cursor {
 .manga-text {
     position: absolute;
     bottom: 2%;
-    left: -4%;
+    left: -10%;
     opacity: 0;
     transform: scale(0.7);
     animation: fadeIn 1s ease-out 3s forwards;
