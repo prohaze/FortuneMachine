@@ -498,7 +498,8 @@ body.new-cursor {
     transform: translateX(-50%) scale(1.1);
 }
 
-/*----------------------------------------------- 全局进度条样式 -----------------------------------------------*/
+/*----------------------------------------------- 全局样式 -----------------------------------------------*/
+/*进度条*/
 .progress-wrap {
   position: fixed;   /* 固定在窗口底部 */
   bottom: 0;
@@ -517,3 +518,21 @@ body.new-cursor {
   transition: width 0.5s ease;
 }
 
+/*网页上方的文字提醒*/
+.page-hint {
+  position: fixed;
+  top: 5%;
+  left: 50%;
+  transform: translateX(-50%);
+  color: white;
+  font-size: 24px;
+  font-weight: bold;
+  z-index: 10000;
+  pointer-events: none; /* 不影响点击 */
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+
+.page-hint.show {
+  opacity: 1;
+}

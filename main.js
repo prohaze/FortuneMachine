@@ -148,21 +148,100 @@ function loadPageContent(pageName) {
       document.body.className = 'drawinglots-page new-cursor';
       break;
 
+//????先试试
     case 'interpretation': {
-      const results = ['Daji', 'Zhongji', 'Xiaoji', 'Xiaoxiong', 'Zhongxiong', 'Daxiong'];
-      const randomResult = results[Math.floor(Math.random() * results.length)];
-      interpretationResult = randomResult;
+  const results = ['Daji', 'Zhongji', 'Xiaoji', 'Xiaoxiong', 'Zhongxiong', 'Daxiong'];
+  const randomResult = results[Math.floor(Math.random() * results.length)];
+  interpretationResult = randomResult;
 
-      newContent = `
-        <div class="interpretation-container">
-          <img src="ArtAsset/Interpretation/InterpretationPaper.png" class="interpretation-paper">
-          <img src="ArtAsset/Interpretation/Interpretation${randomResult}.png" class="interpretation-result">
-          <img src="ArtAsset/Interpretation/InterpretationButton.png" class="interpretation-button" id="interpretationButton">
-        </div>
-      `;
-      document.body.className = 'interpretation-page new-cursor';
-      break;
+  newContent = `
+    <div class="interpretation-container">
+      <img src="ArtAsset/Interpretation/InterpretationPaper.png" 
+           class="interpretation-paper" id="interpretationPaper">
+      <img src="ArtAsset/Interpretation/Interpretation${randomResult}.png" 
+           class="interpretation-result" id="interpretationResult">
+      <button id="saveButton" 
+              style="position:absolute; top:10px; right:10px; z-index:1000;">
+        Save the Result
+      </button>
+      <img src="ArtAsset/Interpretation/InterpretationButton.png" 
+           class="interpretation-button" id="interpretationButton">
+    </div>
+  `;
+  document.body.className = 'interpretation-page new-cursor';
+
+  // 在 interpretation 页面渲染完成后，立刻绑定保存事件
+    setTimeout(() => {
+    const saveBtn = document.getElementById('saveButton');
+    const paperEl = document.getElementById('interpretationPaper');
+    const resultEl = document.getElementById('interpretationResult');
+    if (!saveBtn || !paperEl || !resultEl) return;
+
+    saveBtn.addEventListener('click', async function () {
+        if (!resultEl.src || resultEl.src.trim() === '') {
+            alert('Please Draw the lot First!');
+            return;
+        }
+
+        try {
+        const paperBlobUrl = await urlToBlobUrl(paperEl.src);
+        const resultBlobUrl = await urlToBlobUrl(resultEl.src);
+
+        const paperImg = await loadImage(paperBlobUrl);
+        const resultImg = await loadImage(resultBlobUrl);
+
+        const canvas = document.createElement('canvas');
+        const ctx = canvas.getContext('2d');
+
+        canvas.width = paperImg.naturalWidth || paperImg.width;
+        canvas.height = paperImg.naturalHeight || paperImg.height;
+
+        ctx.drawImage(paperImg, 0, 0, canvas.width, canvas.height);
+
+        const rw = resultImg.naturalWidth || resultImg.width;
+        const rh = resultImg.naturalHeight || resultImg.height;
+        const rx = Math.round((canvas.width - rw) / 2);
+        const ry = Math.round((canvas.height - rh) / 2);
+        ctx.drawImage(resultImg, rx, ry, rw, rh);
+
+        canvas.toBlob(function (blob) {
+            const dlUrl = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = dlUrl;
+            a.download = '签文.png';
+            document.body.appendChild(a);
+            a.click();
+            a.remove();
+            URL.revokeObjectURL(dlUrl);
+
+            URL.revokeObjectURL(paperBlobUrl);
+            URL.revokeObjectURL(resultBlobUrl);
+        }, 'image/png');
+        } catch (err) {
+        console.error(err);
+        alert('保存失败：请确保通过 http 方式访问，并且资源路径正确。或者直接去找小田，小田会告诉你解决办法:)');
+        }
+    });
+
+    async function urlToBlobUrl(url) {
+        const res = await fetch(url, { mode: 'same-origin' });
+        if (!res.ok) throw new Error('资源加载失败：' + url);
+        const blob = await res.blob();
+        return URL.createObjectURL(blob);
     }
+
+    function loadImage(src) {
+        return new Promise((resolve, reject) => {
+        const img = new Image();
+        img.onload = () => resolve(img);
+        img.onerror = reject;
+        img.src = src;
+        });
+    }
+    }, 100); 
+
+  break;
+}
 
     case 'ending':
       newContent = `
@@ -174,6 +253,7 @@ function loadPageContent(pageName) {
       document.body.className = 'ending-page';
       break;
   }
+
 
   // 用新内容替换主体
   document.body.innerHTML = newContent;
@@ -199,7 +279,7 @@ function initStartPage() {
   if (startButton) {
     startButton.addEventListener('click', () => {
       navigateToPage('incenseoffering');
-      // 也可以在事件里显式设置进度，保证一致性
+      
       setProgress(20);
     });
   }
@@ -210,8 +290,7 @@ function initIncenseOfferingPage() {
   const incenseItems = document.querySelectorAll('.incense-item');
   const incenseArrow = document.getElementById('incenseArrow');
 
-  
-  showHint("Click to Choose");
+  //showHint("Click to Choose");
 
   incenseItems.forEach(item => {
     item.addEventListener('click', () => {
