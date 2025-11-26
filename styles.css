@@ -497,3 +497,23 @@ body.new-cursor {
 .ending-replay:hover {
     transform: translateX(-50%) scale(1.1);
 }
+
+/*----------------------------------------------- 全局进度条样式 -----------------------------------------------*/
+.progress-wrap {
+  position: fixed;   /* 固定在窗口底部 */
+  bottom: 0;
+  left: 0;
+  width: 100vw;
+  height: 6px;
+  background: rgba(255,255,255,0.2);
+  z-index: 99999;    /* 提高层级，确保在所有页面容器之上 */
+  pointer-events: none; /* 避免遮挡页面点击 */
+}
+
+.progress-bar {
+  height: 100%;
+  width: 0%;
+  background: rgba(255,255,255,0.9);
+  transition: width 0.5s ease;
+}
+

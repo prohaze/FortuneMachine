@@ -1,345 +1,351 @@
-// 全局变量
+// -------- 全局状态 --------
 let currentPage = 'start';
 let clickedItems = [];
 let interpretationResult = '';
 
-// 页面初始化
-document.addEventListener('DOMContentLoaded', function() {
-    initializePage();
+// -------- 启动入口 --------
+document.addEventListener('DOMContentLoaded', () => {
+  // 首次页面加载：确保进度条存在，然后初始化当前页
+  ensureProgressBar();
+  initializePage();
 });
 
+// -------- 进度条相关 --------
+function ensureProgressBar() {
+  // 如果进度条不存在，则插入到 body 末尾...
+  if (!document.getElementById('progressBar')) {
+    const progressWrap = `
+      <div class="progress-wrap">
+        <div class="progress-bar" id="progressBar"></div>
+      </div>
+    `;
+    document.body.insertAdjacentHTML('beforeend', progressWrap);
+  }
+}
+
+function setProgress(percent) {
+  // 每次调用都重新获取元素，避免被吃掉了。
+  const progressBar = document.getElementById('progressBar');
+  if (progressBar) {
+    progressBar.style.width = percent + '%';
+  }
+}
+
+// -------- 上方提醒文字相关 --------
+function showHint(text) {
+  const hint = document.getElementById('pageHint');
+  hint.innerText = text;
+  hint.classList.add('show');
+}
+
+function hideHint() {
+  const hint = document.getElementById('pageHint');
+  hint.classList.remove('show');
+}
+
+
+// -------- 页面初始化 --------
 function initializePage() {
-    // 根据当前页面初始化相应功能
-    switch(currentPage) {
-        case 'start':
-            initStartPage();
-            break;
-        case 'incenseoffering':
-            initIncenseOfferingPage();
-            break;
-        case 'building':
-            initBuildingPage();
-            break;
-        case 'drawinglots':
-            initDrawingLotsPage();
-            break;
-        case 'interpretation':
-            initInterpretationPage();
-            break;
-        case 'ending':
-            initEndingPage();
-            break;
-    }
+  switch (currentPage) {
+    case 'start': initStartPage(); break;
+    case 'incenseoffering': initIncenseOfferingPage(); break;
+    case 'building': initBuildingPage(); break;
+    case 'drawinglots': initDrawingLotsPage(); break;
+    case 'interpretation': initInterpretationPage(); break;
+    case 'ending': initEndingPage(); break;
+  }
 }
 
-// Start页面功能
-function initStartPage() {
-    const startButton = document.getElementById('startButton');
-    if (startButton) {
-        startButton.addEventListener('click', function() {
-            navigateToPage('incenseoffering');
-        });
-    }
-}
-
-/// 页面导航功能
+// -------- 页面切换 --------
 function navigateToPage(pageName) {
-    const currentBody = document.body;
-    
-    // 添加退出动画
-    currentBody.classList.add('page-transition-out');
-    
+  const currentBody = document.body;
+
+  // 退出动画
+  currentBody.classList.add('page-transition-out');
+
+  setTimeout(() => {
+    // 加载新页面内容：先屏蔽页面，然后重新加入progress bar
+    loadPageContent(pageName);
+
+    // 页面切换时的动画
+    currentBody.classList.remove('page-transition-out');
+    currentBody.classList.add('page-transition-in');
+
     setTimeout(() => {
-        // 根据目标页面加载新内容
-        loadPageContent(pageName);
-        currentBody.classList.remove('page-transition-out');
-        currentBody.classList.add('page-transition-in');
-        
-        setTimeout(() => {
-            currentBody.classList.remove('page-transition-in');
-        }, 800);
-        
-        currentPage = pageName;
-        initializePage();
+      currentBody.classList.remove('page-transition-in');
     }, 800);
+
+    // 更新当前页并初始化交互
+    currentPage = pageName;
+    initializePage();
+  }, 800);
 }
 
-// 页面导航功能
-function navigateToPage(pageName) {
-    const currentBody = document.body;
-    
-    // 添加退出动画
-    currentBody.classList.add('page-transition-out');
-    
-    setTimeout(() => {
-        // 根据目标页面加载新内容
-        loadPageContent(pageName);
-        currentBody.classList.remove('page-transition-out');
-        currentBody.classList.add('page-transition-in');
-        
-        setTimeout(() => {
-            currentBody.classList.remove('page-transition-in');
-        }, 800);
-        
-        currentPage = pageName;
-        initializePage();
-    }, 800);
-}
-
-// 加载页面内容
+// -------- 加载页面内容 --------
 function loadPageContent(pageName) {
-    let newContent = '';
-    
-    switch(pageName) {
+  let newContent = '';
 
-        case 'start':
-            newContent = `
-                <div class="start-container">
-                    <img src="ArtAsset/Start/StartBackground.png" alt="背景" class="start-background">
-                    <img src="ArtAsset/Start/StartTitle.png" alt="标题" class="start-title floating">
-                    <img src="ArtAsset/Start/StartButton.png" alt="开始按钮" class="start-button" id="startButton">
-                </div>
-            `;
-            document.body.className = 'start-page';
-        break;
+  switch (pageName) {
+    case 'start':
+      newContent = `
+        <div class="start-container">
+          <img src="ArtAsset/Start/StartBackground.png" alt="背景" class="start-background">
+          <img src="ArtAsset/Start/StartTitle.png" alt="标题" class="start-title floating">
+          <img src="ArtAsset/Start/StartButton.png" alt="开始按钮" class="start-button" id="startButton">
+        </div>
+      `;
+      document.body.className = 'start-page';
+      break;
 
+    case 'incenseoffering':
+      newContent = `
+        <div class="incense-container">
+          <img src="ArtAsset/Incenseoffering/IncenseofferingBackgroundBox.png" class="incense-box">
+          <img src="ArtAsset/Incenseoffering/IncenseofferingIncense1.png" class="incense-item incense-1">
+          <img src="ArtAsset/Incenseoffering/IncenseofferingIncense2.png" class="incense-item incense-2">
+          <img src="ArtAsset/Incenseoffering/IncenseofferingIncense3.png" class="incense-item incense-3">
+          <img src="ArtAsset/Incenseoffering/IncenseofferingArrow.png" class="incense-arrow" id="incenseArrow">
+        </div>
+      `;
+      document.body.className = 'incenseoffering-page';
+      break;
 
-        case 'incenseoffering':
-            newContent = `
-                <div class="incense-container">
-                    <img src="ArtAsset/Incenseoffering/IncenseofferingBackgroundBox.png" 
-                    class="incense-box">
-                    <img src="ArtAsset/Incenseoffering/IncenseofferingIncense1.png" 
-                    class="incense-item incense-1">
-                    <img src="ArtAsset/Incenseoffering/IncenseofferingIncense2.png" 
-                    class="incense-item incense-2">
-                    <img src="ArtAsset/Incenseoffering/IncenseofferingIncense3.png" 
-                    class="incense-item incense-3">
-                    <img src="ArtAsset/Incenseoffering/IncenseofferingArrow.png" 
-                    class="incense-arrow" id="incenseArrow">
-                </div>
-            `;
-            document.body.className = 'incenseoffering-page';
-        break;
+    case 'building':
+      newContent = `
+        <div class="building-container">
+          <img src="ArtAsset/Building/BuildingArrow.png" class="building-arrow" id="buildingArrow">
+          <div class="building-items">
+            <div class="building-item pixiu">
+              <img src="ArtAsset/Building/BuildingPixiu.png" class="building-main">
+              <img src="ArtAsset/Building/BuildingPixiuIcon.png" class="building-icon pixiu-icon">
+            </div>
+            <div class="building-item huangdaxiansi">
+              <img src="ArtAsset/Building/BuildingHuangdaxiansi.png" class="building-main">
+              <img src="ArtAsset/Building/BuildingHuangdaxiansiIcon.png" class="building-icon huangdaxiansi-icon">
+            </div>
+            <div class="building-item sanshengtang">
+              <img src="ArtAsset/Building/BuildingSanshengtang.png" class="building-main">
+              <img src="ArtAsset/Building/BuildingSanshengtangIcon.png" class="building-icon sanshengtang-icon">
+            </div>
+            <div class="building-item shengxiang">
+              <img src="ArtAsset/Building/BuildingShengxiang.png" class="building-main">
+              <img src="ArtAsset/Building/BuildingShengxiangIcon.png" class="building-icon shengxiang-icon">
+            </div>
+          </div>
+        </div>
+      `;
+      document.body.className = 'building-page new-cursor';
+      break;
 
+    case 'drawinglots':
+      newContent = `
+        <div class="drawinglots-container">
+          <img src="ArtAsset/Drawinglots/DrawinglotsYellowSpot.png" class="drawinglots-spot">
+          <img src="ArtAsset/Drawinglots/DrawinglotsLotpot.png" class="drawinglots-pot" id="drawinglotsPot">
+          <img src="ArtAsset/Drawinglots/DrawinglotsLot.png" class="drawinglots-lot" id="drawinglotsLot">
+        </div>
+      `;
+      document.body.className = 'drawinglots-page new-cursor';
+      break;
 
-        case 'building':
-            newContent = `
-                <div class="building-container">
+    case 'interpretation': {
+      const results = ['Daji', 'Zhongji', 'Xiaoji', 'Xiaoxiong', 'Zhongxiong', 'Daxiong'];
+      const randomResult = results[Math.floor(Math.random() * results.length)];
+      interpretationResult = randomResult;
 
-                    <img src="ArtAsset/Building/BuildingArrow.png" class="building-arrow" id="buildingArrow">
-
-                    <div class="building-items">
-
-                        <div class="building-item pixiu">
-                            <img src="ArtAsset/Building/BuildingPixiu.png" class="building-main">
-                            <img src="ArtAsset/Building/BuildingPixiuIcon.png" class="building-icon pixiu-icon">
-                        </div>
-
-                        <div class="building-item huangdaxiansi">
-                            <img src="ArtAsset/Building/BuildingHuangdaxiansi.png" class="building-main">
-                            <img src="ArtAsset/Building/BuildingHuangdaxiansiIcon.png" class="building-icon huangdaxiansi-icon">
-                        </div>
-
-                        <div class="building-item sanshengtang">
-                            <img src="ArtAsset/Building/BuildingSanshengtang.png" class="building-main">
-                            <img src="ArtAsset/Building/BuildingSanshengtangIcon.png" class="building-icon sanshengtang-icon">
-                        </div>
-
-                        <div class="building-item shengxiang">
-                            <img src="ArtAsset/Building/BuildingShengxiang.png" class="building-main">
-                            <img src="ArtAsset/Building/BuildingShengxiangIcon.png" class="building-icon shengxiang-icon">
-                        </div>
-                    </div>
-                </div>
-            `;
-            document.body.className = 'building-page new-cursor';
-            break;
-
-        case 'drawinglots':
-            newContent = `
-                <div class="drawinglots-container">
-                    <img src="ArtAsset/Drawinglots/DrawinglotsYellowSpot.png" class="drawinglots-spot">
-                    <img src="ArtAsset/Drawinglots/DrawinglotsLotpot.png" class="drawinglots-pot" id="drawinglotsPot">
-                    <img src="ArtAsset/Drawinglots/DrawinglotsLot.png" class="drawinglots-lot" id="drawinglotsLot">
-                </div>
-            `;
-            document.body.className = 'drawinglots-page new-cursor';
-            break;
-
-        case 'interpretation':
-            const results = ['Daji', 'Zhongji', 'Xiaoji', 'Xiaoxiong', 'Zhongxiong', 'Daxiong'];
-            const randomResult = results[Math.floor(Math.random() * results.length)];
-            interpretationResult = randomResult;
-            
-            newContent = `
-                <div class="interpretation-container">
-                    <img src="ArtAsset/Interpretation/InterpretationPaper.png" class="interpretation-paper">
-                    <img src="ArtAsset/Interpretation/Interpretation${randomResult}.png" class="interpretation-result">
-                    <img src="ArtAsset/Interpretation/InterpretationButton.png" class="interpretation-button" id="interpretationButton">
-                </div>
-            `;
-            document.body.className = 'interpretation-page new-cursor';
-            break;
-
-        case 'ending':
-            newContent = `
-                <div class="ending-container">
-                    <img src="ArtAsset/Ending/EndingTitle.png" class="ending-title">
-                    <img src="ArtAsset/Ending/EndingReplay.png" class="ending-replay" id="endingReplay">
-                </div>
-            `;
-            document.body.className = 'ending-page';
-            break;
+      newContent = `
+        <div class="interpretation-container">
+          <img src="ArtAsset/Interpretation/InterpretationPaper.png" class="interpretation-paper">
+          <img src="ArtAsset/Interpretation/Interpretation${randomResult}.png" class="interpretation-result">
+          <img src="ArtAsset/Interpretation/InterpretationButton.png" class="interpretation-button" id="interpretationButton">
+        </div>
+      `;
+      document.body.className = 'interpretation-page new-cursor';
+      break;
     }
-    
-    document.body.innerHTML = newContent;
+
+    case 'ending':
+      newContent = `
+        <div class="ending-container">
+          <img src="ArtAsset/Ending/EndingTitle.png" class="ending-title">
+          <img src="ArtAsset/Ending/EndingReplay.png" class="ending-replay" id="endingReplay">
+        </div>
+      `;
+      document.body.className = 'ending-page';
+      break;
+  }
+
+  // 用新内容替换主体
+  document.body.innerHTML = newContent;
+
+  // 设置进度条进度
+  ensureProgressBar();
+  const progressByPage = {
+    start: 0,
+    incenseoffering: 20,
+    building: 40,
+    drawinglots: 60,
+    interpretation: 80,
+    ending: 100
+  };
+  setProgress(progressByPage[pageName] ?? 0);
 }
 
-// Incenseoffering页面功能
+// -------- 各页面功能，应该没改 --------
+
+// Start 页面
+function initStartPage() {
+  const startButton = document.getElementById('startButton');
+  if (startButton) {
+    startButton.addEventListener('click', () => {
+      navigateToPage('incenseoffering');
+      // 也可以在事件里显式设置进度，保证一致性
+      setProgress(20);
+    });
+  }
+}
+
+// Incenseoffering 页面
 function initIncenseOfferingPage() {
-    const incenseItems = document.querySelectorAll('.incense-item');
-    const incenseArrow = document.getElementById('incenseArrow');
+  const incenseItems = document.querySelectorAll('.incense-item');
+  const incenseArrow = document.getElementById('incenseArrow');
 
-    incenseItems.forEach(item => {
-        item.addEventListener('click', function() {
-            // 第一次点击时切换鼠标样式
-            if (!document.body.classList.contains('new-cursor')) {
-                document.body.classList.add('new-cursor');
-            }
+  
+  showHint("Click to Choose");
 
-            // 点击任意一支香后显示箭头
-            if (incenseArrow) {
-                incenseArrow.classList.add('show');
-            }
-        });
+  incenseItems.forEach(item => {
+    item.addEventListener('click', () => {
+      // 第一次点击时切换鼠标样式
+      if (!document.body.classList.contains('new-cursor')) {
+        document.body.classList.add('new-cursor');
+      }
+      // 点击后显示箭头
+      if (incenseArrow) {
+        incenseArrow.classList.add('show');
+      }
     });
+  });
 
-    if (incenseArrow) {
-        incenseArrow.addEventListener('click', function() {
-            navigateToPage('building');
-        });
-    }
+  if (incenseArrow) {
+    incenseArrow.addEventListener('click', () => {
+      navigateToPage('building');
+      setProgress(40);
+    });
+  }
 }
 
-// Building页面功能
+// Building 页面
 function initBuildingPage() {
-    const buildingItems = document.querySelectorAll('.building-item');
-    let clickedCount = 0;
-    
-    buildingItems.forEach(item => {
-        item.addEventListener('click', function() {
-            const icon = item.querySelector('.building-icon');
-            if (!icon.classList.contains('show')) {
-                icon.classList.add('show');
-                clickedCount++;
-                
-                if (clickedCount === buildingItems.length) {
-                    // 所有建筑都被点击后，3秒后自动跳转
-                    setTimeout(() => {
-                        navigateToPage('drawinglots');
-                    }, 1000);
-                }
-            }
-        });
+  const buildingItems = document.querySelectorAll('.building-item');
+  let clickedCount = 0;
+
+  buildingItems.forEach(item => {
+    item.addEventListener('click', () => {
+      const icon = item.querySelector('.building-icon');
+      if (icon && !icon.classList.contains('show')) {
+        icon.classList.add('show');
+        clickedCount++;
+        // 全部点击后延时跳转
+        if (clickedCount === buildingItems.length) {
+          setTimeout(() => {
+            navigateToPage('drawinglots');
+            setProgress(60);
+          }, 1000);
+        }
+      }
     });
+  });
+
+  const buildingArrow = document.getElementById('buildingArrow');
+  if (buildingArrow) {
+    buildingArrow.addEventListener('click', () => {
+      // 箭头直接跳转
+      navigateToPage('drawinglots');
+      setProgress(60);
+    });
+  }
 }
 
-// Drawinglots页面功能
+// Drawinglots 页面
 function initDrawingLotsPage() {
-    const pot = document.getElementById('drawinglotsPot');
-    const lot = document.getElementById('drawinglotsLot');
+  const pot = document.getElementById('drawinglotsPot');
+  const lot = document.getElementById('drawinglotsLot');
 
-   if (pot) {
+  if (pot) {
     // 页面初始化时触发淡入
-        pot.classList.add('show');
+    pot.classList.add('show');
 
-        pot.addEventListener('click', function() {
-            // 先移除再强制重绘
-            pot.classList.remove('shake');
-            // 强制浏览器重绘
-            void pot.offsetWidth;   
-            pot.classList.add('shake');
+    pot.addEventListener('click', () => {
+      // 先移除再强制重绘触发 shake
+      pot.classList.remove('shake');
+      void pot.offsetWidth; // 强制重绘
+      pot.classList.add('shake');
 
-            setTimeout(() => {
-                pot.classList.remove('shake');
-                lot.classList.add('show');
-            }, 2000);
-        } 
-        );
-    }
+      setTimeout(() => {
+        pot.classList.remove('shake');
+        if (lot) lot.classList.add('show');
+      }, 2000);
+    });
+  }
 
-
-    if (lot) {
-        lot.addEventListener('click', function() {
-            navigateToPage('interpretation');
-        });
-    }
+  if (lot) {
+    lot.addEventListener('click', () => {
+      navigateToPage('interpretation');
+      setProgress(80);
+    });
+  }
 }
 
-// Interpretation页面功能
+// Interpretation 页面
 function initInterpretationPage() {
-    const button = document.getElementById('interpretationButton');
-    
-    if (button) {
-        button.addEventListener('click', function() {
-            showMangaContent();
-        });
-    }
+  const button = document.getElementById('interpretationButton');
+  if (button) {
+    button.addEventListener('click', () => {
+      showMangaContent();
+    });
+  }
 }
 
 function showMangaContent() {
-    const container = document.querySelector('.interpretation-container');
-    const result = interpretationResult;
-    
-    // 清除现有内容
-    container.innerHTML = `
-        <div class="manga-container">
-            <img src="ArtAsset/Interpretation/Interpretation${result}Manga1.png" class="manga-item">
-            <img src="ArtAsset/Interpretation/Interpretation${result}Manga2.png" class="manga-item">
-            <img src="ArtAsset/Interpretation/Interpretation${result}Manga3.png" class="manga-item">
-            <img src="ArtAsset/Interpretation/Interpretation${result}Manga4.png" class="manga-item">
-        </div>
-        <img src="ArtAsset/Interpretation/Interpretation${result}MangaText.png" class="manga-text">
-        <img src="ArtAsset/Interpretation/InterpretationArrow.png" class="interpretation-arrow" id="interpretationArrow">
-    `;
-    
-    // 添加箭头点击事件
-    const arrow = document.getElementById('interpretationArrow');
-    if (arrow) {
-        arrow.addEventListener('click', function() {
-            navigateToPage('ending');
-        });
-    }
+  const container = document.querySelector('.interpretation-container');
+  const result = interpretationResult;
+
+  if (!container) return;
+
+  // 清除现有内容并加入漫画与箭头
+  container.innerHTML = `
+    <div class="manga-container">
+      <img src="ArtAsset/Interpretation/Interpretation${result}Manga1.png" class="manga-item">
+      <img src="ArtAsset/Interpretation/Interpretation${result}Manga2.png" class="manga-item">
+      <img src="ArtAsset/Interpretation/Interpretation${result}Manga3.png" class="manga-item">
+      <img src="ArtAsset/Interpretation/Interpretation${result}Manga4.png" class="manga-item">
+    </div>
+    <img src="ArtAsset/Interpretation/Interpretation${result}MangaText.png" class="manga-text">
+    <img src="ArtAsset/Interpretation/InterpretationArrow.png" class="interpretation-arrow" id="interpretationArrow">
+  `;
+
+  // 添加箭头点击事件
+  const arrow = document.getElementById('interpretationArrow');
+  if (arrow) {
+    arrow.addEventListener('click', () => {
+      navigateToPage('ending');
+      setProgress(100);
+    });
+  }
 }
 
-// Ending页面功能
+// Ending 页面
 function initEndingPage() {
-    const replayButton = document.getElementById('endingReplay');
-    
-    if (replayButton) {
-        replayButton.addEventListener('click', function() {
-            // 重置所有状态
-            currentPage = 'start';
-            clickedItems = [];
-            interpretationResult = '';
-            navigateToPage('start');
-        });
-    }
-}
+  const replayButton = document.getElementById('endingReplay');
 
-/// 添加上滑动画
-const style = document.createElement('style');
-style.textContent = `
-    @keyframes slideUp {
-        from {
-            transform: translateX(-50%) translateY(200px);
-            opacity: 0;
-        }
-        to {
-            transform: translateX(-50%) translateY(0);
-            opacity: 1;
-        }
-    }
-`;
-document.head.appendChild(style);
+  if (replayButton) {
+    replayButton.addEventListener('click', () => {
+      // 重置所有状态
+      currentPage = 'start';
+      clickedItems = [];
+      interpretationResult = '';
+      navigateToPage('start');
+      setProgress(0);
+    });
+  }
+}
