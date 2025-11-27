@@ -415,32 +415,94 @@ function initInterpretationPage() {
   }
 }
 
+//Interpretation页面的漫画解读部分
 function showMangaContent() {
   const container = document.querySelector('.interpretation-container');
   const result = interpretationResult;
 
   if (!container) return;
 
-  // 清除现有内容并加入漫画与箭头
-  container.innerHTML = `
-    <div class="manga-container">
-      <img src="ArtAsset/Interpretation/Interpretation${result}Manga1.png" class="manga-item">
-      <img src="ArtAsset/Interpretation/Interpretation${result}Manga2.png" class="manga-item">
-      <img src="ArtAsset/Interpretation/Interpretation${result}Manga3.png" class="manga-item">
-      <img src="ArtAsset/Interpretation/Interpretation${result}Manga4.png" class="manga-item">
-    </div>
-    <img src="ArtAsset/Interpretation/Interpretation${result}MangaText.png" class="manga-text">
-    <img src="ArtAsset/Interpretation/InterpretationArrow.png" class="interpretation-arrow" id="interpretationArrow">
-  `;
+  // 清空容器，只保留背景
+  container.innerHTML = '';
 
-  // 添加箭头点击事件
-  const arrow = document.getElementById('interpretationArrow');
-  if (arrow) {
-    arrow.addEventListener('click', () => {
-      navigateToPage('ending');
-      setProgress(100);
-    });
+  // 创建漫画容器
+  const mangaContainer = document.createElement('div');
+  mangaContainer.className = 'manga-container';
+
+  // 创建4张漫画图（初始都隐藏）
+  for (let i = 1; i <= 4; i++) {
+    const img = document.createElement('img');
+    img.src = `ArtAsset/Interpretation/Interpretation${result}Manga${i}.png`;
+    img.className = 'manga-item';
+    img.id = `manga-${i}`; // 给每张图一个ID，方便控制
+    mangaContainer.appendChild(img);
   }
+
+  // 创建提示图（右下角）
+  const hintImg = document.createElement('img');
+  hintImg.src = 'ArtAsset/Interpretation/InterpretationMangaHint.png';
+  hintImg.className = 'interpretation-manga-hint';
+  hintImg.id = 'mangaHint';
+
+  // 创建文字图（左下角，初始隐藏）
+  const textImg = document.createElement('img');
+  textImg.src = `ArtAsset/Interpretation/Interpretation${result}MangaText.png`;
+  textImg.className = 'manga-text';
+  textImg.style.opacity = '0'; // 初始透明
+
+  // 创建箭头（右下角，初始隐藏）
+  const arrowImg = document.createElement('img');
+  arrowImg.src = 'ArtAsset/Interpretation/InterpretationArrow.png';
+  arrowImg.className = 'interpretation-arrow';
+  arrowImg.id = 'interpretationArrow';
+  arrowImg.style.opacity = '0'; // 初始透明
+
+  // 将所有元素添加到容器
+  container.appendChild(mangaContainer);
+  container.appendChild(hintImg);
+  container.appendChild(textImg);
+  container.appendChild(arrowImg);
+
+  // 设置点击事件：每点击一次显示一张漫画
+  let currentMangaIndex = 1; // 记录当前要显示第几张
+  const totalMangas = 4;
+
+  container.addEventListener('click', function handleClick(e) {
+    // 如果还有漫画没显示
+    if (currentMangaIndex <= totalMangas) {
+      const mangaImg = document.getElementById(`manga-${currentMangaIndex}`);
+      if (mangaImg) {
+        mangaImg.classList.add('show'); // 显示当前漫画
+        currentMangaIndex++;
+
+        // 如果全部显示完了
+        if (currentMangaIndex > totalMangas) {
+          // 隐藏提示图
+          hintImg.classList.add('hide');
+          
+          // 1秒后显示文字图
+          setTimeout(() => {
+            textImg.style.opacity = '1';
+          }, 1000);
+
+          // 2秒后显示箭头
+          setTimeout(() => {
+            arrowImg.style.opacity = '1';
+          }, 2000);
+
+          // 移除点击事件，防止重复触发
+          container.removeEventListener('click', handleClick);
+        }
+      }
+    }
+  });
+
+  // 箭头点击事件：跳转到Ending
+  arrowImg.addEventListener('click', (e) => {
+    e.stopPropagation(); // 阻止事件冒泡，避免触发container的点击
+    navigateToPage('ending');
+    setProgress(100);
+  });
 }
 
 // Ending 页面
