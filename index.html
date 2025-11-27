@@ -13,19 +13,28 @@
 </head>
 <body class="start-page">
 
+  <!-- 全局进度条 -->
+  <div class="progress-wrap">
+    <div class="progress-bar" id="progressBar"></div>
+  </div>
+
   <div class="start-container">
     <img src="ArtAsset/Start/StartBackground.png" alt="背景" class="start-background">
     <img src="ArtAsset/Start/StartTitle.png" alt="标题" class="start-title floating">
     <img src="ArtAsset/Start/StartButton.png" alt="开始按钮" class="start-button" id="startButton">
   </div>
 
-<!-- 全局进度条 -->
-  <div class="progress-wrap">
-    <div class="progress-bar" id="progressBar"></div>
+<!-- Incenseoffering 页面 -->
+<div class="incenseoffering-page">
+  <div class="incense-container">
+    <img src="ArtAsset/Incenseoffering/IncenseofferingBackgroundBox.png" class="incense-box">
+    <img src="ArtAsset/Incenseoffering/IncenseofferingIncense1.png" class="incense-item incense-1" id="incense1">
+    <img src="ArtAsset/Incenseoffering/IncenseofferingIncense2.png" class="incense-item incense-2" id="incense2">
+    <img src="ArtAsset/Incenseoffering/IncenseofferingIncense3.png" class="incense-item incense-3" id="incense3">
+    <img src="ArtAsset/Incenseoffering/IncenseofferingHint.png" class="incense-hint" id="incenseHint">
+    <img src="ArtAsset/Incenseoffering/IncenseofferingArrow.png" class="incense-arrow" id="incenseArrow">
   </div>
-
-<!-- 网页上方的文字提醒 -->
-  <div id="pageHint" class="page-hint"></div>
+</div>
 
   <!-- Interpretation 页面 -->
 <div class="interpretation-container">
@@ -34,9 +43,7 @@
         style="position:absolute; top:10px; right:10px; z-index:1000;">
     Save
   </button>
-
 </div>
-
 
 <!--调用js-->
   <script src="main.js"></script>

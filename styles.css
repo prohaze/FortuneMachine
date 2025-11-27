@@ -118,6 +118,30 @@ body.new-cursor {
     z-index: 1;
 }
 
+/* 提示文字：呼吸灯效果 */
+.incense-hint {
+    position: absolute;
+    bottom: 8%;
+    left: 50%;
+    transform: translateX(-50%) scale(0.8);
+    opacity: 1;              /*默认显示*/
+    animation: breathe 2s ease-in-out infinite;
+    animation-play-state: running; /*自动播放*/
+    z-index: 9999;
+}
+
+/*
+.incense-hint.show {
+    opacity: 1;
+    animation-play-state: running;
+}*/
+
+@keyframes breathe {
+    0%, 100% { opacity: 0.3; }
+    50% { opacity: 1; }
+}
+
+
 /* 背景桌子：只动画 bottom/opacity，不改 transform */
 .incense-box {
     position: absolute;

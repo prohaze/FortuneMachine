@@ -94,6 +94,7 @@ function loadPageContent(pageName) {
           <img src="ArtAsset/Start/StartButton.png" alt="开始按钮" class="start-button" id="startButton">
         </div>
       `;
+
       document.body.className = 'start-page';
       break;
 
@@ -105,37 +106,46 @@ function loadPageContent(pageName) {
           <img src="ArtAsset/Incenseoffering/IncenseofferingIncense2.png" class="incense-item incense-2">
           <img src="ArtAsset/Incenseoffering/IncenseofferingIncense3.png" class="incense-item incense-3">
           <img src="ArtAsset/Incenseoffering/IncenseofferingArrow.png" class="incense-arrow" id="incenseArrow">
+          <img src="ArtAsset/Incenseoffering/IncenseofferingHint.png" class="incense-hint" id="incenseHint">
         </div>
       `;
+
+    //document.getElementById('pageHint').textContent = 'Click to Choose Your Incense';
+
       document.body.className = 'incenseoffering-page';
       break;
 
     case 'building':
       newContent = `
         <div class="building-container">
+      
+          <img src="ArtAsset/Building/BuildingHint.png" class="building-hint" id="buildingHint">
+      
           <img src="ArtAsset/Building/BuildingArrow.png" class="building-arrow" id="buildingArrow">
           <div class="building-items">
             <div class="building-item pixiu">
               <img src="ArtAsset/Building/BuildingPixiu.png" class="building-main">
               <img src="ArtAsset/Building/BuildingPixiuIcon.png" class="building-icon pixiu-icon">
-            </div>
-            <div class="building-item huangdaxiansi">
+          </div>
+          <div class="building-item huangdaxiansi">
               <img src="ArtAsset/Building/BuildingHuangdaxiansi.png" class="building-main">
               <img src="ArtAsset/Building/BuildingHuangdaxiansiIcon.png" class="building-icon huangdaxiansi-icon">
-            </div>
-            <div class="building-item sanshengtang">
+          </div>
+          <div class="building-item sanshengtang">
               <img src="ArtAsset/Building/BuildingSanshengtang.png" class="building-main">
               <img src="ArtAsset/Building/BuildingSanshengtangIcon.png" class="building-icon sanshengtang-icon">
-            </div>
-            <div class="building-item shengxiang">
+          </div>
+          <div class="building-item shengxiang">
               <img src="ArtAsset/Building/BuildingShengxiang.png" class="building-main">
               <img src="ArtAsset/Building/BuildingShengxiangIcon.png" class="building-icon shengxiang-icon">
-            </div>
+          </div>
           </div>
         </div>
-      `;
-      document.body.className = 'building-page new-cursor';
-      break;
+    `;
+
+//document.getElementById('pageHint').textContent = 'Click on the Building Image to Worship';
+  document.body.className = 'building-page new-cursor';
+  break;
 
     case 'drawinglots':
       newContent = `
@@ -168,6 +178,9 @@ function loadPageContent(pageName) {
            class="interpretation-button" id="interpretationButton">
     </div>
   `;
+
+  //document.getElementById('pageHint').textContent = 'Click to Continue';
+
   document.body.className = 'interpretation-page new-cursor';
 
   // 在 interpretation 页面渲染完成后，立刻绑定保存事件
@@ -289,6 +302,7 @@ function initStartPage() {
 function initIncenseOfferingPage() {
   const incenseItems = document.querySelectorAll('.incense-item');
   const incenseArrow = document.getElementById('incenseArrow');
+  const incenseHint = document.getElementById('incenseHint');
 
   //showHint("Click to Choose");
 
@@ -302,6 +316,10 @@ function initIncenseOfferingPage() {
       if (incenseArrow) {
         incenseArrow.classList.add('show');
       }
+      /*// 点击后显示提示文字
+      if (incenseHint) {
+        incenseHint.classList.add('show'); 
+      }*/
     });
   });
 
