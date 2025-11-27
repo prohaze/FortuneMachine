@@ -334,7 +334,19 @@ function initIncenseOfferingPage() {
 // Building 页面
 function initBuildingPage() {
   const buildingItems = document.querySelectorAll('.building-item');
+  const buildingMains = document.querySelectorAll('.building-main'); // 新增：获取所有建筑图片
   let clickedCount = 0;
+
+  // 新增：为建筑图片添加hover放大效果
+  buildingMains.forEach(main => {
+    main.style.transition = 'transform 0.3s ease';
+    main.addEventListener('mouseenter', () => {
+      main.style.transform = 'scale(1.1)';
+    });
+    main.addEventListener('mouseleave', () => {
+      main.style.transform = 'scale(1)';
+    });
+  });
 
   buildingItems.forEach(item => {
     item.addEventListener('click', () => {

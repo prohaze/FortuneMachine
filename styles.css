@@ -290,6 +290,26 @@ body.new-cursor {
 .building-page .sanshengtang-icon { top: -50%; left: 50%; }
 .building-page .shengxiang-icon { top: -25%; left: 100%; }
 
+/* Building 页面提示文字 */
+.building-page .building-hint {
+    position: absolute;
+    top: 5%;           /* 距离顶部5%，位于最上方 */
+    left: 50%;
+    transform: translateX(-50%) scale(0.8);
+    opacity: 1;        /* 默认显示 */
+    animation: breathe 2s ease-in-out infinite;
+    z-index: 9999;     /* 确保在最上层 */
+}
+
+/* 建筑图片hover放大效果 */
+.building-page .building-main {
+    transition: transform 0.3s ease; /* 添加平滑过渡 */
+}
+
+.building-page .building-main:hover {
+    transform: scale(1.1); /* 鼠标悬停时放大10% */
+}
+
 /*----------------------------------------------- Drawinglots页面样式 -----------------------------------------------*/
 .drawinglots-container {
     width: 100vw;
