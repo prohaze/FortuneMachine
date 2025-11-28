@@ -327,12 +327,12 @@ function loadPageContent(pageName) {
 
   // 设置进度条进度
   const progressByPage = {
-    start: 0,
-    instruction: 10,
-    incenseoffering: 20,
-    building: 40,
-    drawinglots: 60,
-    interpretation: 80,
+    start: 14.29,
+    instruction: 28.57,
+    incenseoffering: 42.86,
+    building: 57.14,
+    drawinglots: 71.43,
+    interpretation: 85.71,
     ending: 100
   };
   setProgress(progressByPage[pageName] ?? 0);
