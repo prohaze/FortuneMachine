@@ -285,13 +285,52 @@ function loadPageContent(pageName) {
 
 
   // 用新内容替换主体
-  document.body.innerHTML = newContent;
+    // 构建完整页面内容（固定元素 + 页面特定内容）
+  const fullHTML = `
+    <!-- 页面顶部提示文字 -->
+    <div class="page-hints-container">
+      <span class="page-hint-item" id="hint-incense">Choose an incense</span>
+      <span class="page-hint-item" id="hint-temple">Walk through the temple</span>
+      <span class="page-hint-item" id="hint-draw">Draw your fortune</span>
+      <div class="hint-divider"></div>
+      <span class="page-hint-item" id="hint-poem">Read the poem</span>
+      <span class="page-hint-item" id="hint-comic">Comic interpretation</span>
+    </div>
+    
+    <!-- 全局进度条 -->
+    <div class="progress-wrap">
+      <div class="progress-bar" id="progressBar"></div>
+    </div>
+    
+    <!-- 页面特定内容 -->
+    ${newContent}
+  `;
+
+    // 构建完整页面内容（固定元素 + 页面特定内容）
+    // 用新内容替换主体，并确保包含固定元素
+  document.body.innerHTML = 
+    '<!-- 页面顶部提示文字 -->' +
+    '<div class="page-hints-container">' +
+    '  <span class="page-hint-item" id="hint-incense">Choose an incense</span>' +
+    '  <span class="page-hint-item" id="hint-temple">Walk through the temple</span>' +
+    '  <span class="page-hint-item" id="hint-draw">Draw your fortune</span>' +
+    '  <div class="hint-divider"></div>' +
+    '  <span class="page-hint-item" id="hint-poem">Read the poem</span>' +
+    '  <span class="page-hint-item" id="hint-comic">Comic interpretation</span>' +
+    '</div>' +
+    
+    '<!-- 全局进度条 -->' +
+    '<div class="progress-wrap">' +
+    '  <div class="progress-bar" id="progressBar"></div>' +
+    '</div>' +
+    
+    '<!-- 页面特定内容 -->' +
+    newContent;
 
   // 设置进度条进度
-  ensureProgressBar();
   const progressByPage = {
     start: 0,
-    instruction: 10,  // 添加 Instruction 页面的进度
+    instruction: 10,
     incenseoffering: 20,
     building: 40,
     drawinglots: 60,
@@ -465,6 +504,17 @@ function initDrawingLotsPage() {
 // Interpretation 页面
 function initInterpretationPage() {
   const button = document.getElementById('interpretationButton');
+  
+  // 获取提示文字元素
+  const poemHint = document.getElementById('hint-poem');
+  const comicHint = document.getElementById('hint-comic');
+  
+  if (poemHint) poemHint.classList.add('glow');
+  if (comicHint) {
+    comicHint.style.display = 'inline-block'; // 确保显示
+    comicHint.classList.remove('glow');       // 确保不发光
+  }
+
   if (button) {
     button.addEventListener('click', () => {
       showMangaContent();
@@ -481,6 +531,15 @@ function showMangaContent() {
 
   // 清空容器，只保留背景
   container.innerHTML = '';
+
+    // 切换提示文字状态："Read the poem"变暗，"Comic interpretation"发光
+  const poemHint = document.getElementById('hint-poem');
+  const comicHint = document.getElementById('hint-comic');
+
+  if (poemHint) poemHint.classList.remove('glow');   // 移除发光
+  if (comicHint) {
+    comicHint.classList.add('glow');                  // 添加发光
+  }
 
   // 创建漫画容器
   const mangaContainer = document.createElement('div');

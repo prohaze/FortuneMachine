@@ -1,3 +1,11 @@
+/* 添加自定义字体 */
+@font-face {
+    font-family: 'ABeeZee';
+    src: url('ArtAsset/ABeeZee-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
 /* 全局样式 */
 * {
     margin: 0;
@@ -348,7 +356,7 @@ body.new-cursor {
 /* Building 页面提示文字 */
 .building-page .building-hint {
     position: absolute;
-    top: 5%;           /* 距离顶部5%，位于最上方 */
+    top: 12%;           /* 距离顶部5%，位于最上方 */
     left: 50%;
     transform: translateX(-50%) scale(0.8);
     opacity: 1;        /* 默认显示 */
@@ -661,4 +669,62 @@ body.new-cursor {
 
 .page-hint.show {
   opacity: 1;
+}
+
+/*----------------------------------------------- 页面顶部提示文字样式 -----------------------------------------------*/
+.page-hints-container {
+    position: fixed;
+    top: 5%;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 25px;          /* 减小间距 */
+    z-index: 10000;
+    font-family: 'ABeeZee', Arial, sans-serif;
+    font-size: 18px;    /* 减小字体大小 */
+    color: rgba(255, 255, 255, 0.5);
+    pointer-events: none;
+    white-space: nowrap; /* 强制不换行 */
+}
+
+.page-hint-item {
+    position: relative;
+    transition: all 0.5s ease;
+    color: rgba(255, 255, 255, 0.5);  /* 默认暗色 */
+}
+
+/* 发光状态 */
+.page-hint-item.glow {
+    color: rgba(255, 255, 255, 1);
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.8), 0 0 20px rgba(255, 255, 255, 0.6);
+}
+
+/* Incenseoffering页面：第一个提示发光 */
+.incenseoffering-page #hint-incense {
+    color: rgba(255, 255, 255, 1);
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.8), 0 0 20px rgba(255, 255, 255, 0.6);
+}
+
+/* Building页面：第二个提示发光 */
+.building-page #hint-temple {
+    color: rgba(255, 255, 255, 1);
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.8), 0 0 20px rgba(255, 255, 255, 0.6);
+}
+
+/* Drawinglots页面：第三个提示发光 */
+.drawinglots-page #hint-draw {
+    color: rgba(255, 255, 255, 1);
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.8), 0 0 20px rgba(255, 255, 255, 0.6);
+}
+
+/* Interpretation页面初始状态：第四个提示发光 */
+.interpretation-page #hint-poem {
+    color: rgba(255, 255, 255, 1);
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.8), 0 0 20px rgba(255, 255, 255, 0.6);
+}
+
+/* Interpretation页面漫画模式：第五个提示发光 */
+.interpretation-page #hint-comic {
+    color: rgba(255, 255, 255, 1);
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.8), 0 0 20px rgba(255, 255, 255, 0.6);
 }
