@@ -48,6 +48,7 @@ function hideHint() {
 function initializePage() {
   switch (currentPage) {
     case 'start': initStartPage(); break;
+    case 'instruction': initInstructionPage(); break;  // 新增的
     case 'incenseoffering': initIncenseOfferingPage(); break;
     case 'building': initBuildingPage(); break;
     case 'drawinglots': initDrawingLotsPage(); break;
@@ -60,11 +61,14 @@ function initializePage() {
 function navigateToPage(pageName) {
   const currentBody = document.body;
 
+  // 先清空body内容，防止旧页面残留导致闪现
+  currentBody.innerHTML = '';
+
   // 退出动画
   currentBody.classList.add('page-transition-out');
 
   setTimeout(() => {
-    // 加载新页面内容：先屏蔽页面，然后重新加入progress bar
+    // 加载新页面内容
     loadPageContent(pageName);
 
     // 页面切换时的动画
@@ -96,6 +100,18 @@ function loadPageContent(pageName) {
       `;
 
       document.body.className = 'start-page';
+      break;
+
+        case 'instruction':
+      newContent = `
+        <div class="instruction-container">
+          <img src="ArtAsset/Instruction/InstructionBackground.png" class="instruction-background">
+          <img src="ArtAsset/Instruction/InstructionWelcome.png" class="instruction-welcome">
+          <img src="ArtAsset/Instruction/InstructionText.png" class="instruction-text">
+          <img src="ArtAsset/Instruction/InstructionHintText.png" class="instruction-hint-text">
+        </div>
+      `;
+      document.body.className = 'instruction-page';  
       break;
 
     case 'incenseoffering':
@@ -275,6 +291,7 @@ function loadPageContent(pageName) {
   ensureProgressBar();
   const progressByPage = {
     start: 0,
+    instruction: 10,  // 添加 Instruction 页面的进度
     incenseoffering: 20,
     building: 40,
     drawinglots: 60,
@@ -291,11 +308,51 @@ function initStartPage() {
   const startButton = document.getElementById('startButton');
   if (startButton) {
     startButton.addEventListener('click', () => {
-      navigateToPage('incenseoffering');
-      
-      setProgress(20);
+      navigateToPage('instruction');  // 改成跳转到 instruction
+      setProgress(10);  // 进度条改为10%
     });
   }
+}
+
+// Instruction 页面
+function initInstructionPage() {
+  const container = document.querySelector('.instruction-container');
+  const welcome = document.querySelector('.instruction-welcome');
+  const text = document.querySelector('.instruction-text');
+  const hintText = document.querySelector('.instruction-hint-text');
+
+  if (!container) return;
+
+  // 初始状态设置
+  welcome.style.opacity = '0';
+  welcome.style.transform = 'translateY(100px)';
+  text.style.opacity = '0';
+  hintText.style.opacity = '0';
+
+  // 1秒后：Welcome 图片从下往上移动并弹跳
+  setTimeout(() => {
+    welcome.style.transition = 'all 1s cubic-bezier(0.68, -0.55, 0.265, 1.55)'; // 弹跳缓动
+    welcome.style.opacity = '1';
+    welcome.style.transform = 'translateY(-50%)'; // 移动到垂直居中
+  }, 1000);
+
+  // Welcome 动画完成后：InstructionText 淡入
+  setTimeout(() => {
+    text.style.transition = 'opacity 1s ease-in';
+    text.style.opacity = '1';
+  }, 2000);
+
+  // 3秒后：InstructionHintText 从右下角淡入
+  setTimeout(() => {
+    hintText.style.transition = 'opacity 0.8s ease-in';
+    hintText.style.opacity = '1';
+  }, 5000);
+
+  // 点击任意位置进入下一个页面
+  container.addEventListener('click', () => {
+    navigateToPage('incenseoffering');
+    setProgress(20);
+  }, { once: true }); // 只触发一次
 }
 
 // Incenseoffering 页面
