@@ -496,12 +496,24 @@ body.new-cursor {
 .interpretation-button {
     position: absolute;
     bottom: 0%;
-    left: 45%;
+    left: 42%;
     transform: translateX(-50%);
     scale: 0.65;
     opacity: 0;
     animation: fadeIn 1s ease-out 6s forwards, float 2s ease-in-out infinite 6s;
     cursor: url('ArtAsset/NewCursor.png'), pointer;
+}
+
+.interpretation-download {
+    position: absolute;
+    bottom: 0%;
+    left: calc(60%);  /* 在InterpretationButton右边120px位置 */
+    transform: translateX(-50%);
+    scale: 0.65;
+    opacity: 0;
+    animation: fadeIn 1s ease-out 6s forwards, float 2s ease-in-out infinite 6s;
+    cursor: url('ArtAsset/NewCursor.png'), pointer;
+    z-index: 1000;
 }
 
 .manga-container {

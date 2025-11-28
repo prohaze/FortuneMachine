@@ -180,18 +180,16 @@ function loadPageContent(pageName) {
   const randomResult = results[Math.floor(Math.random() * results.length)];
   interpretationResult = randomResult;
 
-  newContent = `
+    newContent = `
     <div class="interpretation-container">
       <img src="ArtAsset/Interpretation/InterpretationPaper.png" 
            class="interpretation-paper" id="interpretationPaper">
       <img src="ArtAsset/Interpretation/Interpretation${randomResult}.png" 
            class="interpretation-result" id="interpretationResult">
-      <button id="saveButton" 
-              style="position:absolute; top:10px; right:10px; z-index:1000;">
-        Save the Result
-      </button>
       <img src="ArtAsset/Interpretation/InterpretationButton.png" 
            class="interpretation-button" id="interpretationButton">
+      <img src="ArtAsset/Interpretation/InterpretationDownload.png" 
+           class="interpretation-download" id="saveButton">
     </div>
   `;
 
