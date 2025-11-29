@@ -1,0 +1,247 @@
+/* compat-mac-fix.css - Mac/Safari 兼容性强制修复 */
+/* 本文件使用 !important 覆盖原有样式，无需修改原文件 */
+
+/* 只在 Mac/Safari 环境下生效 */
+.mac-safari-env {
+    /* 全局缩放校准 */
+    zoom: 0.97; /* 整体微调 */
+}
+
+/* 基础元素修复 */
+.mac-safari-env * {
+    -webkit-font-smoothing: antialiased !important;
+    -moz-osx-font-smoothing: grayscale !important;
+    -webkit-transform-style: preserve-3d !important;
+    transform-style: preserve-3d !important;
+}
+
+.mac-safari-env img {
+    max-width: 100% !important;
+    height: auto !important;
+    display: block !important;
+    -webkit-user-drag: none !important;
+    -webkit-transform: translateZ(0) !important;
+    transform: translateZ(0) !important;
+}
+
+/* ===== Start 页面修复 ===== */
+.mac-safari-env .start-title {
+    top: -24% !important;
+    transform: translateX(-50%) scale(0.72) !important; /* 修复独立 scale 属性 */
+    animation: float 3s ease-in-out infinite !important;
+}
+
+.mac-safari-env .start-button {
+    bottom: 15% !important;
+    transform: translateX(-50%) scale(0.6) !important;
+}
+
+/* ===== Instruction 页面修复 ===== */
+.mac-safari-env .instruction-welcome {
+    transform: translateY(-50%) scale(0.68) !important; /* 修复独立 scale */
+    bottom: -37% !important;
+}
+
+.mac-safari-env .instruction-text {
+    transform: translateX(-50%) scale(0.66) !important;
+    top: -27% !important;
+}
+
+/* ===== Incenseoffering 页面修复 ===== */
+.mac-safari-env .incense-container {
+    zoom: 1 !important; /* 防止被父级缩放影响 */
+}
+
+.mac-safari-env .incense-box {
+    bottom: -15% !important;
+    transform: translateX(-50%) scale(0.72) !important;
+}
+
+.mac-safari-env .incense-item {
+    /* 使用更稳健的定位方式 */
+    position: absolute !important;
+    bottom: 20% !important;
+    transform-origin: center bottom !important;
+}
+
+.mac-safari-env .incense-1 {
+    left: 25% !important;
+    transform: scale(0.72) !important;
+}
+
+.mac-safari-env .incense-2 {
+    left: 50% !important;
+    transform: translateX(-50%) scale(0.72) !important;
+}
+
+.mac-safari-env .incense-3 {
+    right: 25% !important;
+    transform: scale(0.71) !important;
+}
+
+/* hover 效果修复 */
+.mac-safari-env .incense-1:hover,
+.mac-safari-env .incense-3:hover {
+    transform: scale(0.85) !important;
+}
+
+.mac-safari-env .incense-2:hover {
+    transform: translateX(-50%) scale(0.85) !important;
+}
+
+.mac-safari-env .incense-arrow {
+    right: 3% !important;
+    bottom: 5% !important;
+}
+
+/* ===== Building 页面修复 ===== */
+.mac-safari-env .building-page .building-items {
+    display: flex !important;
+    justify-content: center !important;
+    align-items: flex-end !important;
+    gap: 60px !important; /* 自动间距 */
+    position: absolute !important;
+    bottom: 5% !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    width: 90% !important;
+    scale: 0.75 !important; /* 修复独立 scale */
+    animation: none !important; /* 防止动画冲突 */
+}
+
+.mac-safari-env .building-page .building-item {
+    position: relative !important; /* 改为相对定位 */
+    left: auto !important;
+    bottom: auto !important;
+    animation: none !important; /* 移除动画防止抖动 */
+    opacity: 1 !important;
+    transition: all 0.5s ease-out !important;
+}
+
+.mac-safari-env .building-page .building-item.show {
+    opacity: 1 !important;
+}
+
+/* 建筑主体 hover 修复 */
+.mac-safari-env .building-page .building-main {
+    transition: transform 0.3s ease !important;
+}
+
+.mac-safari-env .building-page .building-main:hover {
+    transform: scale(1.08) !important; /* 稍微减小 hover 幅度 */
+}
+
+/* 建筑图标位置 */
+.mac-safari-env .building-page .pixiu-icon { 
+    top: 2% !important; 
+    left: 18% !important; 
+}
+.mac-safari-env .building-page .huangdaxiansi-icon { 
+    top: -28% !important; 
+    left: 42% !important; 
+}
+.mac-safari-env .building-page .sanshengtang-icon { 
+    top: -50% !important; 
+    left: 50% !important; 
+}
+.mac-safari-env .building-page .shengxiang-icon { 
+    top: -25% !important; 
+    left: 100% !important; 
+}
+
+/* ===== Drawinglots 页面修复 ===== */
+.mac-safari-env .drawinglots-container {
+    zoom: 1 !important;
+}
+
+.mac-safari-env .drawinglots-spot,
+.mac-safari-env .drawinglots-pot {
+    transform: scale(0.68) !important;
+}
+
+.mac-safari-env .drawinglots-lot.show {
+    transform: scale(0.62) !important;
+    top: 0% !important;
+}
+
+/* ===== Interpretation 页面修复 ===== */
+.mac-safari-env .interpretation-paper,
+.mac-safari-env .interpretation-result {
+    transform: scale(0.65) !important;
+    bottom: -5% !important; /* 向上调整 */
+}
+
+.mac-safari-env .interpretation-button,
+.mac-safari-env .interpretation-download {
+    transform: translateX(-50%) scale(0.6) !important;
+}
+
+.mac-safari-env .manga-container {
+    transform: translate(-50%, -50%) scale(0.72) !important;
+    gap: 30px !important;
+}
+
+.mac-safari-env .manga-text {
+    transform: scale(0.68) !important;
+    bottom: 2% !important;
+    left: -8% !important;
+}
+
+.mac-safari-env .interpretation-arrow {
+    transform: scale(0.7) !important;
+    bottom: 2% !important;
+    right: 2% !important;
+}
+
+.mac-safari-env .interpretation-manga-hint {
+    transform: scale(0.7) !important;
+    bottom: 2% !important;
+    right: 2% !important;
+}
+
+/* ===== Ending 页面修复 ===== */
+.mac-safari-env .ending-title {
+    transform: translateX(-50%) scale(0.75) !important;
+}
+
+.mac-safari-env .ending-replay {
+    transform: translateX(-50%) scale(0.55) !important;
+    bottom: 3% !important;
+    left: 42% !important;
+}
+
+.mac-safari-env .ending-redraw {
+    transform: translateX(-50%) scale(0.55) !important;
+    bottom: 3% !important;
+    left: 48% !important; /* 根据你修改后的值调整 */
+}
+
+/* ===== 上方提示文字修复 ===== */
+.mac-safari-env .page-hints-container {
+    zoom: 1 !important; /* 防止被父级缩放 */
+}
+
+.mac-safari-env .page-hint-item {
+    font-size: 16px !important; /* 稍微缩小字体 */
+}
+
+/* ===== 进度条修复 ===== */
+.mac-safari-env .progress-wrap {
+    position: fixed !important;
+    will-change: transform !important;
+    z-index: 999999 !important;
+}
+
+/* 禁用可能导致抖动的动画 */
+@media not all and (min-resolution:.001dpcm) {
+    .mac-safari-env .floating,
+    .mac-safari-env .incense-arrow.show,
+    .mac-safari-env .interpretation-manga-hint,
+    .mac-safari-env .interpretation-arrow,
+    .mac-safari-env .ending-title,
+    .mac-safari-env .ending-replay,
+    .mac-safari-env .ending-redraw {
+        animation-duration: 2s !important; /* 减缓动画速度 */
+        animation-timing-function: ease-in-out !important;
+    }
+}
