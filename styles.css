@@ -632,7 +632,7 @@ body.new-cursor {
 .ending-replay {
     position: absolute;
     bottom: 1.5%;
-    left: 47.5%;
+    left: 42%;
     transform: translateX(-50%);
     opacity: 0;
     scale: 0.6;
@@ -641,6 +641,22 @@ body.new-cursor {
 }
 
 .ending-replay:hover {
+    transform: translateX(-50%) scale(1.1);
+}
+
+/* 重新抽签按钮 */
+.ending-redraw {
+    position: absolute;
+    bottom: 3.5%;
+    left: 48%; 
+    transform: translateX(-50%);
+    opacity: 0;
+    scale: 0.6;
+    animation: fadeIn 1s ease-out 3.5s forwards; /* 比 Replay 晚 0.5 秒出现 */
+    cursor: url('ArtAsset/NormalCursor.png'), pointer;
+}
+
+.ending-redraw:hover {
     transform: translateX(-50%) scale(1.1);
 }
 
@@ -699,6 +715,13 @@ body.new-cursor {
     white-space: nowrap; /* 强制不换行 */
 }
 
+/* 在 Start, Instruction, Ending 页面隐藏顶部提示文字 */
+.start-page .page-hints-container,
+.instruction-page .page-hints-container,
+.ending-page .page-hints-container {
+    display: none !important;
+}
+
 .page-hint-item {
     position: relative;
     transition: all 0.5s ease;
@@ -729,14 +752,14 @@ body.new-cursor {
     text-shadow: 0 0 10px rgba(255, 255, 255, 0.8), 0 0 20px rgba(255, 255, 255, 0.6);
 }
 
-/* Interpretation页面初始状态：第四个提示发光 */
+/* Interpretation页面初始状态：第四个提示发光 
 .interpretation-page #hint-poem {
     color: rgba(255, 255, 255, 1);
     text-shadow: 0 0 10px rgba(255, 255, 255, 0.8), 0 0 20px rgba(255, 255, 255, 0.6);
 }
 
-/* Interpretation页面漫画模式：第五个提示发光 */
+Interpretation页面漫画模式：第五个提示发光 
 .interpretation-page #hint-comic {
     color: rgba(255, 255, 255, 1);
     text-shadow: 0 0 10px rgba(255, 255, 255, 0.8), 0 0 20px rgba(255, 255, 255, 0.6);
-}
+}*/

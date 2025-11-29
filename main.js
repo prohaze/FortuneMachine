@@ -275,10 +275,11 @@ function loadPageContent(pageName) {
         <div class="ending-container">
           <img src="ArtAsset/Ending/EndingTitle.png" class="ending-title">
           <img src="ArtAsset/Ending/EndingReplay.png" class="ending-replay" id="endingReplay">
+          <img src="ArtAsset/Ending/EndingRedraw.png" class="ending-redraw" id="endingRedraw">
         </div>
       `;
       document.body.className = 'ending-page';
-      break;
+    break;
   }
 
 
@@ -507,10 +508,10 @@ function initInterpretationPage() {
   const poemHint = document.getElementById('hint-poem');
   const comicHint = document.getElementById('hint-comic');
   
+  // 设置初始状态：Read the poem 发光，Comic interpretation 不发光
   if (poemHint) poemHint.classList.add('glow');
   if (comicHint) {
-    comicHint.style.display = 'inline-block'; // 确保显示
-    comicHint.classList.remove('glow');       // 确保不发光
+    comicHint.classList.remove('glow'); // 确保漫画提示不发光
   }
 
   if (button) {
@@ -530,7 +531,7 @@ function showMangaContent() {
   // 清空容器，只保留背景
   container.innerHTML = '';
 
-    // 切换提示文字状态："Read the poem"变暗，"Comic interpretation"发光
+   // 切换提示文字状态："Read the poem"变暗，"Comic interpretation"发光
   const poemHint = document.getElementById('hint-poem');
   const comicHint = document.getElementById('hint-comic');
 
@@ -622,15 +623,26 @@ function showMangaContent() {
 // Ending 页面
 function initEndingPage() {
   const replayButton = document.getElementById('endingReplay');
+  const redrawButton = document.getElementById('endingRedraw');
 
   if (replayButton) {
     replayButton.addEventListener('click', () => {
-      // 重置所有状态
+      // 重置所有状态并返回开始页
       currentPage = 'start';
       clickedItems = [];
       interpretationResult = '';
       navigateToPage('start');
       setProgress(0);
+    });
+  }
+
+  if (redrawButton) {
+    redrawButton.addEventListener('click', () => {
+      // 重置必要状态并返回上香页
+      clickedItems = []; // 重置建筑点击记录
+      interpretationResult = ''; // 重置抽签结果
+      navigateToPage('incenseoffering');
+      setProgress(42.86); // 设置到上香页的进度
     });
   }
 }
