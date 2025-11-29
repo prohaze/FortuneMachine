@@ -367,11 +367,14 @@ function initInstructionPage() {
   text.style.opacity = '0';
   hintText.style.opacity = '0';
 
+  // 添加点击状态标志（关键修改）
+  let isClickable = false;
+
   // 1秒后：Welcome 图片从下往上移动并弹跳
   setTimeout(() => {
-    welcome.style.transition = 'all 1s cubic-bezier(0.68, -0.55, 0.265, 1.55)'; // 弹跳缓动
+    welcome.style.transition = 'all 1s cubic-bezier(0.68, -0.55, 0.265, 1.55)';
     welcome.style.opacity = '1';
-    welcome.style.transform = 'translateY(-50%)'; // 移动到垂直居中
+    welcome.style.transform = 'translateY(-50%)';
   }, 1000);
 
   // Welcome 动画完成后：InstructionText 淡入
@@ -380,17 +383,26 @@ function initInstructionPage() {
     text.style.opacity = '1';
   }, 2000);
 
-  // 3秒后：InstructionHintText 从右下角淡入
+  // 3秒后：InstructionHintText 从右下角淡入，并允许点击
   setTimeout(() => {
     hintText.style.transition = 'opacity 0.8s ease-in';
     hintText.style.opacity = '1';
+    // 关键：允许点击
+    isClickable = true;
   }, 5000);
 
-  // 点击任意位置进入下一个页面
-  container.addEventListener('click', () => {
-    navigateToPage('incenseoffering');
-    setProgress(20);
-  }, { once: true }); // 只触发一次
+  // 点击事件处理（关键修改）
+  const clickHandler = () => {
+    if (isClickable) {
+      navigateToPage('incenseoffering');
+      setProgress(20);
+      // 移除事件监听器，防止重复触发
+      container.removeEventListener('click', clickHandler);
+    }
+  };
+
+  // 绑定点击事件
+  container.addEventListener('click', clickHandler);
 }
 
 // Incenseoffering 页面
@@ -638,11 +650,11 @@ function initEndingPage() {
 
   if (redrawButton) {
     redrawButton.addEventListener('click', () => {
-      // 重置必要状态并返回上香页
-      clickedItems = []; // 重置建筑点击记录
+      // 重置抽签状态并返回抽签页（关键修改）
       interpretationResult = ''; // 重置抽签结果
-      navigateToPage('incenseoffering');
-      setProgress(42.86); // 设置到上香页的进度
+      // clickedItems = []; // 重置建筑点击记录
+      navigateToPage('drawinglots'); // 从 'incenseoffering' 改为 'drawinglots'
+      setProgress(71.43); // 设置为 Drawinglots 页面的进度值
     });
   }
 }
