@@ -241,7 +241,7 @@ body.new-cursor {
 }
 
 .incense-3 { 
-    right: 20%; 
+    right: 30%; 
     bottom: 15%;
     transform: scale(0.73);
     animation: slideUpIncense 1s ease-out 0.7s;
@@ -298,7 +298,8 @@ body.new-cursor {
     position: absolute;
     top: 86%;
     left: -10%;
-    transform: translateY(-50%) translateX(-200px)scale(0.8);
+    transform: translateY(-50%) translateX(-200px);
+    scale: calc(0.8);
     animation: slideInArrow 1s ease-out forwards;
 }
 
